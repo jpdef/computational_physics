@@ -1,0 +1,1502 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 6.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[     55122,       1493]
+NotebookOptionsPosition[     51115,       1369]
+NotebookOutlinePosition[     51713,       1392]
+CellTagsIndexPosition[     51670,       1389]
+WindowFrame->Normal
+ContainsDynamic->False*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["\<\
+Quantum Wells --  Eigenvalues of the Schr\[ODoubleDot]dinger Equation\
+\>", "Title",
+ FontSize->24],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section"],
+
+Cell[TextData[{
+ "We investigate the bound states of a particle in a quantum well in one \
+dimension with potential V(x), where V(x) \[LessEqual] 0 and V(x) \[Rule] 0 \
+for |x| \[Rule] \[Infinity].  This notebook shows one way to do this using ",
+ StyleBox["Mathematica.  ",
+  FontSlant->"Italic"],
+ "In units where \[HBar] = m = 1 (where m is the mass of the particle), Schr\
+\[ODoubleDot]dinger's equation is "
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   FractionBox[
+    RowBox[{
+     SuperscriptBox["d", "2"], "\[Psi]"}], 
+    RowBox[{"d", " ", 
+     SuperscriptBox["x", "2"]}]], " ", "+", " ", 
+   RowBox[{"2", " ", 
+    RowBox[{"(", 
+     RowBox[{"E", " ", "-", " ", 
+      RowBox[{"V", 
+       RowBox[{"(", "x", ")"}]}]}], ")"}], " ", "\[Psi]"}]}], " ", "=", " ", 
+  "0"}]], "DisplayFormula"],
+
+Cell[TextData[{
+ "We take the potential to be an even function of x, so the wave functions \
+are either even or odd functions of x, \[Psi](x) = \[PlusMinus]\[Psi](-x). \
+The sign, +1 or -1, is called the parity of the state. It is shown in the \
+textbooks on quantum mechanics  that (i)  the ground state is symmetric \
+\[Psi](x) = \[Psi](-x) and has no zeroes (nodes), (ii) the first excited \
+state is odd and has one node, and (iii) for each higher energy eigenvalue \
+the the number of nodes increases by one and the parity alternates. \n\nWe \
+will find the lowest energy level and corresponding wavefunction for each \
+parity. We will set up a numerical method, but, in this notebook, only apply \
+it to a simple case where the solution can also be obtained exactly, namely \
+the rectangular well of width L and depth ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["V", "0"], TraditionalForm]]],
+ "(< 0), i.e. where V(x) = 0 for |x| > L/2 and V(x) =  ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["V", "0"], TraditionalForm]]],
+ " for |x| \[LessEqual] L/2. We take L = 1, and initially take ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["V", "0"], TraditionalForm]]],
+ "= -8. \n\nFirst, therefore, we set up the potential and plot it. "
+}], "Text",
+ CellChangeTimes->{{3.42150832417728*^9, 3.4215083285408497`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Clear", "[", "\"\<Global`*\>\"", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"L", " ", "=", " ", "1"}], ";"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"v0", " ", "=", " ", 
+   RowBox[{"-", "8"}]}], ";"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"v", "[", "x_", "]"}], " ", ":=", " ", 
+  RowBox[{"v0", " ", "/;", " ", 
+   RowBox[{
+    RowBox[{"Abs", "[", "x", "]"}], " ", "<=", " ", 
+    RowBox[{"L", "/", "2"}]}]}]}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"v", "[", "x_", "]"}], " ", ":=", " ", 
+  RowBox[{"0", " ", "/;", " ", 
+   RowBox[{
+    RowBox[{"Abs", "[", "x", "]"}], " ", ">", " ", 
+    RowBox[{"L", "/", "2"}]}]}]}]], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Plot", "[", 
+  RowBox[{
+   RowBox[{"v", "[", "x", "]"}], ",", " ", 
+   RowBox[{"{", 
+    RowBox[{"x", ",", " ", 
+     RowBox[{"-", "L"}], ",", " ", "L"}], "}"}], " ", ",", 
+   RowBox[{"PlotStyle", " ", "\[Rule]", " ", 
+    RowBox[{"{", 
+     RowBox[{"Red", ",", " ", 
+      RowBox[{"AbsoluteThickness", "[", "3", "]"}]}], "}"}]}], ",", 
+   RowBox[{"AxesStyle", " ", "->", " ", 
+    RowBox[{"AbsoluteThickness", "[", "1", "]"}]}], ",", "  ", 
+   RowBox[{"AxesLabel", " ", "->", " ", 
+    RowBox[{"{", 
+     RowBox[{"\"\<x\>\"", ",", " ", "\"\<V(x)\>\""}], "}"}]}], ",", " ", 
+   RowBox[{"Epilog", " ", "->", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Text", "[", 
+       RowBox[{
+        RowBox[{"Style", "[", 
+         RowBox[{"\"\<Region 1\>\"", ",", " ", 
+          RowBox[{"FontSize", " ", "->", " ", "10"}]}], "]"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "0.75"}], ",", " ", 
+          RowBox[{"-", "5"}]}], "}"}]}], "]"}], " ", ",", " ", 
+      RowBox[{"Text", "[", 
+       RowBox[{
+        RowBox[{"Style", "[", 
+         RowBox[{"\"\<Region 3\>\"", ",", 
+          RowBox[{"FontSize", " ", "->", " ", "10"}]}], "]"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"0.75", ",", " ", 
+          RowBox[{"-", "5"}]}], "}"}]}], "]"}], ",", "  ", 
+      RowBox[{"Text", "[", 
+       RowBox[{
+        RowBox[{"Style", "[", 
+         RowBox[{"\"\<Region 2\>\"", ",", " ", 
+          RowBox[{"FontSize", " ", "->", " ", "10"}]}], "]"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", " ", 
+          RowBox[{"-", "5"}]}], "}"}]}], "]"}]}], "}"}]}]}], "]"}]], "Input",
+ CellChangeTimes->{
+  3.421373862970542*^9, {3.421373904538581*^9, 3.4213739134638367`*^9}, {
+   3.51529352552503*^9, 3.515293604622291*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {}, 
+   {RGBColor[1, 0, 0], AbsoluteThickness[3], LineBox[CompressedData["
+1:eJxN1nsw1AkcAPD1ujzKo8IIV7EK4SKtO/dgQskdsuOxpqwouuFELo+OYXPC
+pS6J0o7oOOdx0rm7atc70Zo75aws2s2y7Xpm7VmbV7V3N+O+39935jvf+cx3
+5vud+f713RkZT41SJZFIWf/mf9XBzWhGqZxvJ61H/Ipl3soq+pffHHfJFWgn
+a9/IiVm0i0H2894htPvLv/+4eRdNzX3y875wdEpfdtypNin42TOdmYcRc2Dz
+jvitLmavwPdiuzT0XsyAj19ylI1kTYOXC9Py2t2mwJW6oyYl4xPgUh/HxIHv
+JOCsryJSbQ6LwWlqdSmJcyJwBKOPzKsZBwePlH/2ohLt45RAE5ehncX6lxaK
+0JreVLnueXSD3uDDQ6HotbLndLYWWrZUl9qhjhYfSSvkKMfAT1XNHg8q0BXR
+YfYL42hvh7E12yZ0caukpDQGTU9lZrhEoa33+Z/khqObalgfaAahR6/lP/7a
+DV3t516v64pO0FJcrXVGq2bSw4Q26D8/2uLxDRldtMixNtyO3h3juOizFS0j
+T4xIdNFsIbOdoYXOYvpXmaqjb9RpGsW9Fa57R0dLMb9+eBI9xmjw8OSibUIC
+z5hWoxPtV8sW0tDXc64G+feNgpuE1hvrLdDSFOfdjDEB2FLf/UBgGR/8q21e
+jOjlMFjY3biDQuGBJXbFTu33B8AGGbUUB5V+sB1l3q5K3gv+1nPuL3YqB2wY
+2FAQatyJ+1536/WQm8BVfMnl6ewGcFiA2e/8E0VgtnbaYGfSNbf/vV+k8v55
+2l2wpax5xbWTDT5cOfLEj9YJ9vLdrKa4xwFfCR9i7H3QC+b4mW86srkfPLfT
+MIPLHAAnnd0TccWIBx4S6FOje4bBx899MrnhCz64kMtmSWoE4Ed7XC4+0hgF
+R0dtMKuqQWuWD93J+VwIHmluT14qRdcNV7t9KUV7Cbpo15fRsnnZh5EqY+sm
+kVrPZHqdew99Ub6JWqCDDkkqpVfro8lLtrFthui21UPZr7aj89N5BWpWaNq7
+k7e22aIXVLLuezujd2m1TP3oTehzHGIqfAnzc36YLaeig9Vzpcxj6AvKgMWC
+BLRYMalML0FXiLYYB02hzVtivTTyxsGkVdXaRJEIvBTQSu+2EoP5zuGmVtkS
+cEKIvoGFYAJsUiSmqZtPgRuO3q6Wp07j/T7N9O5pnQE30uMsXN/Mgpe1PdTY
+QXNgav/HFPMSKfimhVnC94p58EYddQqL4Az57No4wZFdzbn7X6Ptoo+WCwhu
+q2U+tV1Gi/ea2HNW0cEmKnIZwT0q06xta+g7XJbnaYKTz9KOGb5Ba7Fu5J94
+i06/nRlwmWBp3injBwRzQ10qtd+hS9d4TY0E64rbGHyCGb0/HdRQoqNuJXNp
+BA9foJdkEexz+iC9nuCWYAcyj+D1fwD8D+xhZEg=
+     "]]}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{
+    FormBox["\"x\"", TraditionalForm], 
+    FormBox["\"V(x)\"", TraditionalForm]},
+  AxesOrigin->{0, 0},
+  AxesStyle->AbsoluteThickness[1],
+  BaseStyle->{15, FontFamily -> "Times", Bold},
+  Epilog->{
+    InsetBox[
+     FormBox[
+      StyleBox["\"Region 1\"", FontSize -> 10, StripOnInput -> False], 
+      TraditionalForm], {-0.75, -5}], 
+    InsetBox[
+     FormBox[
+      StyleBox["\"Region 3\"", FontSize -> 10, StripOnInput -> False], 
+      TraditionalForm], {0.75, -5}], 
+    InsetBox[
+     FormBox[
+      StyleBox["\"Region 2\"", FontSize -> 10, StripOnInput -> False], 
+      TraditionalForm], {0, -5}]},
+  FrameStyle->Thickness[Large],
+  PlotRange->{{-1, 1}, {-8., 0.}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{
+    Scaled[0.02], 
+    Scaled[0.02]}]], "Output",
+ CellChangeTimes->{
+  3.421373926210504*^9, 3.4213739997283173`*^9, 3.421506481589897*^9, 
+   3.482974559349204*^9, 3.515287571721611*^9, {3.515293570407526*^9, 
+   3.515293605204743*^9}, {3.515293659288105*^9, 3.515293675177878*^9}, 
+   3.515293712533917*^9, {3.515293755995674*^9, 3.5152937858393497`*^9}, 
+   3.515293821477844*^9}]
+}, Open  ]],
+
+Cell["\<\
+
+Although we only consider the rectangular well here, the numerical method can \
+be applied to any potential which is an even function of x vanishes outside \
+some range of x (at least to a sufficiently good approximation) simply by \
+changing the expression for V(x). \
+\>", "Text"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Setting up the Problem", "Section"],
+
+Cell[TextData[{
+ "In region 1,  ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["\[Psi]", "1"], TraditionalForm]]],
+ "= A ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["e", "\[Kappa]x"], TraditionalForm]]],
+ "where \[Kappa] = ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SqrtBox[
+     RowBox[{"2", "|", "E", "|"}]], ","}], TraditionalForm]]],
+ "and in region 3, ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["\[Psi]", "3"], TraditionalForm]]],
+ "= B ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["e", 
+    RowBox[{"-", "\[Kappa]x"}]], TraditionalForm]]],
+ ", so we set up these functions:"
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"B", " ", "=", " ", "1"}], ";"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"\[Psi]1", "[", "x_", "]"}], " ", ":=", " ", 
+  RowBox[{"A", " ", 
+   RowBox[{"Exp", "[", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Abs", "[", 
+       RowBox[{"2", " ", "en"}], "]"}], "^", 
+      RowBox[{"(", 
+       RowBox[{"1", "/", "2"}], ")"}]}], " ", "x"}], "]"}]}]}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"\[Psi]3", "[", "x_", "]"}], " ", ":=", " ", 
+  RowBox[{"B", " ", 
+   RowBox[{"Exp", "[", 
+    RowBox[{
+     RowBox[{"-", " ", 
+      RowBox[{
+       RowBox[{"Abs", "[", 
+        RowBox[{"2", " ", "en"}], "]"}], "^", 
+       RowBox[{"(", 
+        RowBox[{"1", "/", "2"}], ")"}]}]}], " ", "x"}], "]"}]}]}]], "Input"],
+
+Cell[TextData[{
+ "The variable ",
+ StyleBox["en",
+  FontWeight->"Bold"],
+ " is the energy.\nWe also define the Schr\[ODoubleDot]dinger equation for \
+region 2, using a delayed assignment, \":=\", since we will only use it \
+later:"
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"eqn", "[", "en_", "]"}], " ", ":=", " ", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"\[Psi]2", "''"}], "[", "x", "]"}], " ", "+", " ", 
+   RowBox[{"2", 
+    RowBox[{"(", 
+     RowBox[{"en", " ", "-", " ", 
+      RowBox[{"v", "[", "x", "]"}]}], ")"}], 
+    RowBox[{"\[Psi]2", "[", "x", "]"}]}]}]}]], "Input"],
+
+Cell[TextData[{
+ "We also set up the calculation of the wavefunction in region 2 matching the \
+function and its derivative to ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["\[Psi]", "1"], TraditionalForm]]],
+ "at x=-L/2. We will adjust the energy so that either the derivative of \
+\[Psi] vanishes at x=0 (for even eigenfunctions) or \[Psi] vanishes (for odd \
+eigenfunctions). This value for the energy will be an eigenvalue. Since the \
+energy will be determined by a boundary condition at x = 0 we only need to \
+integrate from x = -L/2 up to x = 0."
+}], "Text",
+ CellChangeTimes->{3.421508353115506*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"wavefunc2", "[", "energy_", "]"}], " ", ":=", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"en", " ", "=", " ", "energy"}], ";", " ", 
+    RowBox[{"NDSolve", "[", 
+     RowBox[{
+      RowBox[{"{", " ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"eqn", "[", "energy", "]"}], " ", "==", " ", "0"}], ",", " ",
+         
+        RowBox[{
+         RowBox[{"\[Psi]2", "[", 
+          RowBox[{
+           RowBox[{"-", "L"}], "/", "2"}], "]"}], " ", "\[Equal]", "  ", 
+         RowBox[{"\[Psi]1", "[", 
+          RowBox[{
+           RowBox[{"-", "L"}], "/", "2"}], "]"}]}], ",", " ", "\n", 
+        "\t\t\t\t\t", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"\[Psi]2", "'"}], "[", 
+          RowBox[{
+           RowBox[{"-", "L"}], "/", "2"}], "]"}], " ", "\[Equal]", "  ", 
+         RowBox[{
+          RowBox[{"\[Psi]1", "'"}], "[", 
+          RowBox[{
+           RowBox[{"-", "L"}], "/", "2"}], "]"}]}]}], "}"}], ",", " ", "\n", 
+      "\t\t", "\[Psi]2", ",", " ", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", " ", 
+        RowBox[{
+         RowBox[{"-", "L"}], "/", "2"}], ",", " ", "0"}], "}"}]}], " ", 
+     "]"}]}], ")"}]}]], "Input"],
+
+Cell[TextData[{
+ "Note that it is necessary to set the energy variable ",
+ StyleBox["en",
+  FontWeight->"Bold"],
+ ", used in the computation of ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["\[Psi]", "1"], TraditionalForm]]],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["\[Psi]", "3"], TraditionalForm]]],
+ ", to the current value of the variable ",
+ StyleBox["energy ",
+  FontWeight->"Bold"],
+ " used in the function ",
+ StyleBox["wavefunc2.",
+  FontWeight->"Bold"],
+ " This is done first and then ",
+ StyleBox["NDSolve",
+  FontWeight->"Bold"],
+ "  is called to solve the ",
+ "Schr\[ODoubleDot]dinger equation.",
+ " We define ",
+ StyleBox["wavefunc2[en_]", "Input"],
+ " with a delayed assignment, so that each time it is called, the \
+differential equation is integrated again. This is what we want in order to \
+calculate the eigenvalue.  Note that ",
+ StyleBox["wavefunc2[en_] ", "Input"],
+ "will be given as a replacement rule in the form ",
+ StyleBox["{{\[Psi]2\[Rule]InterpolatingFunction[{{-0.5,0.5}},\"<>\"]}}", 
+  "Input"],
+ ". However, it is more convenient to obtain the wavefunction in region 2 \
+directly as a function of x.  To do so we define ",
+ StyleBox["sol2[x, en]", "Input"],
+ " by"
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"sol2", "[", 
+   RowBox[{
+    RowBox[{"x_", "?", "NumericQ"}], ",", " ", 
+    RowBox[{"en_", "?", "NumericQ"}]}], "]"}], " ", ":=", " ", 
+  RowBox[{
+   RowBox[{"\[Psi]2", "[", "x", "]"}], " ", "/.", " ", 
+   RowBox[{
+    RowBox[{"wavefunc2", "[", "en", "]"}], "[", 
+    RowBox[{"[", "1", "]"}], "]"}]}]}]], "Input"],
+
+Cell[TextData[{
+ "which applies the replacement rule and removes the outer set of curly \
+brackets by taking the first element of the list. Note too that we have added \
+the hieroglyphics\n\t",
+ StyleBox["?NumericQ",
+  FontWeight->"Bold"],
+ "\nto the arguments of sol2. This is necessary in ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " version 5 and later when the solution is put into ",
+ StyleBox["FindRoot",
+  FontWeight->"Bold"],
+ " below to determine the energy eigenvalue.(",
+ StyleBox["?NumericQ",
+  FontWeight->"Bold"],
+ " imposes that the function is only evaluated if the arguments are \
+numerical.)  It is also convenient to define a function for the derivative of \
+the wave function (since we will require that this is zero at x=0 for the \
+even parity solutions):"
+}], "Text",
+ CellChangeTimes->{{3.421508382705098*^9, 3.421508384048872*^9}, {
+  3.4526191197849407`*^9, 3.452619121384219*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"sol2prime", "[", 
+   RowBox[{
+    RowBox[{"x_", "?", "NumericQ"}], ",", 
+    RowBox[{"en_", "?", "NumericQ"}]}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"\[Psi]2", "'"}], "[", "x", "]"}], "/.", 
+   RowBox[{
+    RowBox[{"wavefunc2", "[", "en", "]"}], "[", 
+    RowBox[{"[", "1", "]"}], "]"}]}]}]], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Even Parity Solution", "Section"],
+
+Cell["\<\
+We are now in a position to start calculating. First of all we look for an \
+even eigenfuction by  setting B = A and requiring that the derivative of the \
+wavefunction vanishes at x = 0. We give two initial starting guesses for the \
+eigenvalue, -5  and -8. \
+\>", "Text"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"A", " ", "=", " ", "B"}], ";"}]], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"eval", " ", "=", " ", 
+  RowBox[{"energy", " ", "/.", " ", 
+   RowBox[{"FindRoot", " ", "[", " ", 
+    RowBox[{
+     RowBox[{"sol2prime", "[", 
+      RowBox[{"0", ",", " ", "energy"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"energy", ",", " ", 
+       RowBox[{"-", "5"}], ",", " ", 
+       RowBox[{"-", "8"}]}], "}"}]}], " ", "]"}]}]}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"-", "5.878749912503076`"}]], "Output",
+ CellChangeTimes->{
+  3.421373926546163*^9, 3.421373999941866*^9, 3.421506482101499*^9, 
+   3.4829745596375847`*^9, 3.515287572004737*^9, 3.515293570601911*^9, {
+   3.5152936594338284`*^9, 3.515293675343548*^9}, 3.5152937127036943`*^9, {
+   3.515293756161433*^9, 3.515293786007101*^9}, 3.5152938216279907`*^9}]
+}, Open  ]],
+
+Cell["\<\
+We conclude that  E =-5.87875 is an eigenvalue corresponding to an even \
+eigenfunction of the Hamiltonian. For this simple example of the rectangular \
+well we can explicitly verify that it is an eigenvalue by working out the \
+exact solution. As the  textbooks show,  even-parity  eigenvalues are given \
+by the solutions of\
+\>", "Text"],
+
+Cell[BoxData[
+ RowBox[{"\[Kappa]", " ", "=", " ", 
+  RowBox[{"k", " ", "tan", 
+   RowBox[{"(", 
+    RowBox[{"kL", "/", "2"}], ")"}]}]}]], "DisplayFormula"],
+
+Cell[TextData[{
+ "where k =  ",
+ Cell[BoxData[
+  FormBox[
+   SqrtBox[
+    RowBox[{"2", 
+     RowBox[{"(", 
+      RowBox[{"|", 
+       SubscriptBox["V", "0"], "|", " ", 
+       RowBox[{"-", " ", 
+        RowBox[{"|", "E", "|"}]}]}], ")"}]}]], TraditionalForm]]],
+ ". We also solve this equation with ",
+ StyleBox["FindRoot", "Input"],
+ ", starting with the numerical value found above, ",
+ StyleBox["eval",
+  FontWeight->"Bold"],
+ ",",
+ " as the initial guess:"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{" ", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"kappa", " ", ":=", 
+     RowBox[{"Sqrt", "[", " ", 
+      RowBox[{"Abs", "[", 
+       RowBox[{"2", "analen"}], "]"}], " ", "]"}]}], ";", " ", 
+    RowBox[{"k", " ", ":=", " ", 
+     RowBox[{"Sqrt", "[", 
+      RowBox[{"2", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"Abs", "[", "v0", "]"}], "  ", "-", " ", 
+         RowBox[{"Abs", "[", "analen", "]"}]}], ")"}]}], "]"}]}], ";"}], "\n",
+    " ", 
+   RowBox[{"evalanal", " ", "=", 
+    RowBox[{"analen", " ", "/.", 
+     RowBox[{"FindRoot", " ", "[", " ", 
+      RowBox[{
+       RowBox[{"kappa", " ", "==", "  ", 
+        RowBox[{"k", " ", 
+         RowBox[{"Tan", " ", "[", 
+          RowBox[{"k", " ", 
+           RowBox[{"L", " ", "/", " ", "2"}]}], "]"}]}]}], " ", ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"analen", ",", " ", "eval"}], "}"}]}], " ", 
+      "]"}]}]}]}]}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"-", "5.87874986356345`"}]], "Output",
+ CellChangeTimes->{
+  3.4213739266020317`*^9, 3.421373999997266*^9, 3.421506482325324*^9, 
+   3.482974559685679*^9, 3.515287572071817*^9, 3.5152935706563883`*^9, {
+   3.5152936594872293`*^9, 3.5152936753949614`*^9}, 3.5152937127503757`*^9, {
+   3.515293756215149*^9, 3.515293786058676*^9}, 3.515293821662888*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "The numbers for ",
+ StyleBox["eval",
+  FontWeight->"Bold"],
+ " and ",
+ StyleBox["evalanal",
+  FontWeight->"Bold"],
+ " agree showning that our numerical method correctly found an even-parity \
+eigenvalue.\n\nNow we want the eigenfunction coresponding to our eigenvalue. \
+Since we know the eigenvalue, we do not  want to keep recalculating  the \
+wavefunction so we define a function ",
+ StyleBox["efunc2", "Input"],
+ " with ",
+ StyleBox["immediate",
+  FontSlant->"Italic"],
+ " assignment, and input the eigenvalue for the energy "
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"efunc2", "[", "x_", "]"}], "=", 
+   RowBox[{
+    RowBox[{"\[Psi]2", "[", "x", "]"}], "/.", 
+    RowBox[{
+     RowBox[{"wavefunc2", "[", "eval", "]"}], "[", 
+     RowBox[{"[", "1", "]"}], "]"}]}]}], ";"}]], "Input"],
+
+Cell[TextData[{
+ "(where",
+ StyleBox["[[1]] ", "Input"],
+ "removes one set of curly bracket as above). (Calling ",
+ StyleBox["wavefunct2",
+  FontWeight->"Bold"],
+ " not only computes the eigenfunction in Region 2, but also sets the value \
+of the energy to be used in ",
+ StyleBox["\[Psi]1",
+  FontWeight->"Bold"],
+ " and ",
+ StyleBox["\[Psi]3",
+  FontWeight->"Bold"],
+ " to the desired eigenvalue.) We have now obtained the eigenfunction in all \
+three regions, so let's collect these into a single (not normalized) function \
+",
+ StyleBox["\[Psi]nn[x_]", "Input"],
+ ", which can then easily be plotted (remember that we only computed  ",
+ StyleBox["efunc2[x]",
+  FontWeight->"Bold"],
+ " for -L/2 \[LessEqual] x < 0, and so we also have to specify it for 0 \
+\[LessEqual]  x \[LessEqual] L/2, noting that the eigenfunction is even):"
+}], "Text",
+ CellChangeTimes->{{3.4215084013066597`*^9, 3.421508431885395*^9}, 
+   3.515289108328967*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"\[Psi]nn", " ", "[", "x_", "]"}], " ", ":=", " ", 
+  RowBox[{
+   RowBox[{"efunc2", "[", 
+    RowBox[{"-", "x"}], "]"}], " ", "/;", " ", 
+   RowBox[{"0", " ", "\[LessEqual]", "  ", "x", "  ", "\[LessEqual]", "  ", 
+    RowBox[{"L", "/", "2"}]}]}]}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"\[Psi]nn", "[", "x_", "]"}], " ", ":=", " ", 
+  RowBox[{
+   RowBox[{"efunc2", "[", "x", "]"}], " ", "/;", " ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"-", "L"}], "/", "2"}], " ", "\[LessEqual]", "  ", "x", "  ", 
+    "<", " ", "0"}]}]}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"\[Psi]nn", "[", "x_", "]"}], " ", ":=", " ", 
+  RowBox[{
+   RowBox[{"\[Psi]1", "[", "x", "]"}], " ", "/;", " ", 
+   RowBox[{"x", " ", "<", " ", 
+    RowBox[{
+     RowBox[{"-", "L"}], "/", "2"}]}]}]}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"\[Psi]nn", " ", "[", "x_", "]"}], " ", ":=", " ", 
+  RowBox[{
+   RowBox[{"\[Psi]3", "[", "x", "]"}], " ", "/;", " ", 
+   RowBox[{"x", " ", ">", " ", 
+    RowBox[{"L", "/", "2"}]}]}]}]], "Input"],
+
+Cell[TextData[{
+ "Note the use of the symbol ",
+ StyleBox["/;",
+  FontWeight->"Bold"],
+ " , which means \"provided that\".\n\nWe first normalize the wavefunction, \
+using immediate assignment so that the normalization constant is not \
+recomputed each time a value for the normalized wave function is needed for \
+the plot."
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"normconst", " ", "=", " ", 
+   RowBox[{"Sqrt", "[", " ", 
+    RowBox[{"NIntegrate", " ", "[", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"\[Psi]nn", "[", "x", "]"}], "^", "2"}], ",", " ", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", " ", 
+        RowBox[{"-", "Infinity"}], ",", " ", "Infinity"}], "}"}]}], " ", 
+     "]"}], " ", "]"}]}], ";"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"\[Psi]", "[", "x_", "]"}], " ", ":=", " ", 
+   RowBox[{
+    RowBox[{"\[Psi]nn", "[", "x", "]"}], " ", "/", " ", "normconst"}]}], 
+  ";"}]], "Input"],
+
+Cell[TextData[{
+ "and then plot it. We first define the plot for \[Psi]norm (but do not yet \
+display it because of the semicolon after the command). Then we add the \
+labels with the S",
+ StyleBox["how[Graphics[... ]] ", "Input"],
+ "command. This looks a bit complicated but has the advantage that the \
+current values of the well depth and width, and the eigenvalue are \
+automatically printed without needing to modify this command each time."
+}], "Text",
+ CellChangeTimes->{{3.421373947863536*^9, 3.421373960411188*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"fig", " ", "=", " ", 
+   RowBox[{"Plot", "[", 
+    RowBox[{
+     RowBox[{"\[Psi]", "[", "x", "]"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", " ", 
+       RowBox[{
+        RowBox[{"-", "1.2"}], "L"}], ",", " ", 
+       RowBox[{"1.2", "L"}]}], "}"}], ",", " ", 
+     RowBox[{"PlotStyle", " ", "\[Rule]", " ", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"AbsoluteThickness", "[", "2", "]"}], ",", " ", "Red"}], 
+       "}"}]}], ",", 
+     RowBox[{"AxesLabel", " ", "->", " ", 
+      RowBox[{"{", 
+       RowBox[{"\"\<x\>\"", ",", " ", "\"\<\[Psi]\>\""}], "}"}]}]}], " ", 
+    "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{
+  3.421373969316154*^9, {3.515293636727295*^9, 3.5152936702368717`*^9}, {
+   3.51529373104038*^9, 3.515293739116338*^9}, {3.515293782206849*^9, 
+   3.515293782357408*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Show", "[", 
+  RowBox[{"fig", ",", "  ", 
+   RowBox[{"Graphics", " ", "[", " ", 
+    RowBox[{"{", " ", "\n", "\t\t\t", 
+     RowBox[{
+      RowBox[{"Text", "[", " ", 
+       RowBox[{"en", " ", ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"0.6", ",", " ", "0.9"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "1"}], ",", " ", "0"}], "}"}]}], " ", "]"}], " ", ",", 
+      "\n", 
+      RowBox[{"Text", "[", " ", 
+       RowBox[{"\"\<E = \>\"", ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"0.6", ",", " ", "0.9"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", " ", "0"}], "}"}]}], "  ", "]"}], ",", "\n", 
+      "\t\t\t", 
+      RowBox[{"Text", "[", "  ", 
+       RowBox[{"v0", ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"0.6", ",", " ", "1.1"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "1"}], ",", " ", "0"}], "}"}]}], " ", "]"}], " ", ",", 
+      "\n", 
+      RowBox[{"Text", "[", " ", 
+       RowBox[{"\"\<\!\(\*SubscriptBox[\(V\), \(0\)]\) = \>\"", ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"0.6", ",", " ", "1.1"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", " ", "0"}], "}"}]}], "  ", "]"}], ",", "\n", 
+      "\t\t\t", 
+      RowBox[{"Text", "[", " ", 
+       RowBox[{"\"\<L = \>\"", ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"0.65", ",", " ", "1"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", " ", "0"}], "}"}]}], "]"}], ",", " ", 
+      RowBox[{"Text", "[", " ", 
+       RowBox[{"L", ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"0.65", ",", " ", "1"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "1"}], ",", " ", "0"}], "}"}]}], "]"}]}], "  ", "}"}], 
+    " ", "]"}]}], " ", "]"}]], "Input",
+ CellChangeTimes->{3.421373871261016*^9, 3.421373975510618*^9}],
+
+Cell[BoxData[
+ GraphicsBox[{{{}, {}, 
+    {RGBColor[1, 0, 0], AbsoluteThickness[2], LineBox[CompressedData["
+1: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
+5/n/As3pavg=
+      "]]}}, {InsetBox[
+     RowBox[{"-", "5.878749912503076`"}], {0.6, 0.9}, {-1, 0}], 
+    InsetBox["\<\"E = \"\>", {0.6, 0.9}, {1, 0}], InsetBox[
+     RowBox[{"-", "8"}], {0.6, 1.1}, {-1, 0}], 
+    InsetBox["\<\"\\!\\(\\*SubscriptBox[\\(V\\), \\(0\\)]\\) = \"\>", \
+{0.6, 1.1}, {1, 0}], InsetBox["\<\"L = \"\>", {0.65, 1}, {1, 0}], 
+    InsetBox["1", {0.65, 1}, {-1, 0}]}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{
+    FormBox["\"x\"", TraditionalForm], 
+    FormBox["\"\[Psi]\"", TraditionalForm]},
+  AxesOrigin->{0, 0},
+  AxesStyle->Thickness[Large],
+  BaseStyle->{15, FontFamily -> "Times", Bold},
+  FrameStyle->Thickness[Large],
+  PlotRange->{{-1.2, 1.2}, {0., 1.1239239084572061`}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{
+    Scaled[0.02], 
+    Scaled[0.02]}]], "Output",
+ CellChangeTimes->{
+  3.421373926797221*^9, 3.421374000195777*^9, 3.421506482790722*^9, 
+   3.482974560218604*^9, 3.515287572485084*^9, 3.515293571034114*^9, {
+   3.515293659670031*^9, 3.515293675577545*^9}, 3.515293712900918*^9, {
+   3.515293756362031*^9, 3.515293786288713*^9}, 3.5152938218093033`*^9}]
+}, Open  ]],
+
+Cell["\<\
+We see that the wavefunction matches up smoothly at x = \[PlusMinus]L/2 (i.e. \
+\[PlusMinus]1/2) as expected. Also there are no nodes (zeroes) in the \
+wavefunction which means, since we are in one dimension, that it is the \
+ground state.\
+\>", "Text",
+ CellChangeTimes->{{3.42150845157757*^9, 3.4215084652902117`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Odd Parity Solution", "Section"],
+
+Cell["Now we look at odd-parity solutions.by requiring", "Text"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"A", " ", "=", " ", 
+    RowBox[{"-", "B"}]}], ";"}], " "}]], "Input"],
+
+Cell["\<\
+and looking for a solution where \[Psi] vanishes at x = 0. We give two \
+starting estimates for the eigenvalue of -0.5 and -2.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"eval", " ", "=", " ", 
+  RowBox[{"en", " ", "/.", " ", 
+   RowBox[{"FindRoot", " ", "[", 
+    RowBox[{
+     RowBox[{"sol2", "[", 
+      RowBox[{"0", ",", " ", "en"}], "]"}], " ", ",", 
+     RowBox[{"{", 
+      RowBox[{"en", ",", " ", 
+       RowBox[{"-", "0.5"}], ",", " ", 
+       RowBox[{"-", "2"}]}], "}"}]}], " ", "]"}]}]}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"-", "0.8142029405843095`"}]], "Output",
+ CellChangeTimes->{
+  3.4213739269357557`*^9, 3.42137400028139*^9, 3.421506482879223*^9, 
+   3.482974560468131*^9, 3.515287572744134*^9, 3.515293571272848*^9, {
+   3.515293659749983*^9, 3.5152936756877213`*^9}, 3.515293712983899*^9, {
+   3.515293756431756*^9, 3.5152937863753853`*^9}, 3.515293821883922*^9}]
+}, Open  ]],
+
+Cell["\<\
+We check that the eigenvalue agrees with the analytical eigenvalue, which is \
+a solution of \[Kappa] = \[Dash]k cot (kL / 2).\
+\>", "Text",
+ CellChangeTimes->{{3.452619262255045*^9, 3.452619265743215*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{" ", 
+  RowBox[{"evalanal", " ", "=", " ", 
+   RowBox[{"analen", " ", "/.", 
+    RowBox[{"FindRoot", " ", "[", " ", 
+     RowBox[{
+      RowBox[{"kappa", " ", "==", " ", 
+       RowBox[{
+        RowBox[{"-", " ", "k"}], " ", 
+        RowBox[{"Cot", " ", "[", 
+         RowBox[{"k", " ", 
+          RowBox[{"L", " ", "/", " ", "2"}]}], "]"}]}]}], " ", ",", " ", 
+      RowBox[{"{", 
+       RowBox[{"analen", ",", " ", "eval"}], "}"}]}], " ", 
+     "]"}]}]}]}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"-", "0.8142029672826213`"}]], "Output",
+ CellChangeTimes->{
+  3.421373926985882*^9, 3.4213740003489122`*^9, 3.421506483021553*^9, 
+   3.4829745605214577`*^9, 3.515287572779653*^9, 3.515293571306571*^9, {
+   3.515293659789938*^9, 3.515293675727974*^9}, 3.515293713017693*^9, {
+   3.5152937564649057`*^9, 3.515293786408902*^9}, 3.5152938219110117`*^9}]
+}, Open  ]],
+
+Cell["\<\
+Indeed it agrees.
+
+Next we calculate the eigenfunction for -L/2 \[LessEqual] x \[LessEqual] 0 \
+using immediate assignment and the energy set to the eigenvalue.\
+\>", "Text",
+ CellChangeTimes->{3.4526192833555727`*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"efunc2", "[", "x_", "]"}], "=", 
+   RowBox[{
+    RowBox[{"\[Psi]2", "[", "x", "]"}], "/.", 
+    RowBox[{
+     RowBox[{"wavefunc2", "[", "eval", "]"}], "[", 
+     RowBox[{"[", "1", "]"}], "]"}]}]}], ";"}]], "Input"],
+
+Cell["\<\
+We also need to redefine eigenfunction for 0 \[LessEqual] x \[LessEqual] L/2 \
+(where we didn't explicitly compute it) since it is now odd (not even)\
+\>", "Text"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"\[Psi]nn", " ", "[", "x_", "]"}], " ", ":=", " ", 
+  RowBox[{
+   RowBox[{"-", 
+    RowBox[{"efunc2", "[", 
+     RowBox[{"-", "x"}], "]"}]}], " ", "/;", " ", 
+   RowBox[{"0", " ", "\[LessEqual]", "  ", "x", "  ", "\[LessEqual]", "  ", 
+    RowBox[{"L", "/", "2"}]}]}]}]], "Input"],
+
+Cell["and to compute the normalization factor for this state", "Text"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"normconst", " ", "=", " ", 
+   RowBox[{"Sqrt", "[", 
+    RowBox[{"NIntegrate", " ", "[", " ", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"\[Psi]nn", "[", "x", "]"}], "^", "2"}], ",", " ", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", " ", 
+        RowBox[{"-", "Infinity"}], ",", "Infinity"}], "}"}]}], " ", "]"}], 
+    " ", "]"}]}], ";"}]], "Input"],
+
+Cell["\<\
+Everything else is the same as for the even-parity eigenstate and uses a \
+delayed assignment. Hence we can now create the figure for the normalized \
+wavefunction\
+\>", "Text"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"fig", " ", "=", " ", 
+   RowBox[{"Plot", "[", 
+    RowBox[{
+     RowBox[{"\[Psi]", "[", "x", "]"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", " ", 
+       RowBox[{
+        RowBox[{"-", "2"}], "L"}], ",", 
+       RowBox[{"2", "L"}]}], "}"}], ",", " ", 
+     RowBox[{"PlotStyle", " ", "\[Rule]", " ", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"AbsoluteThickness", "[", "2", "]"}], ",", " ", "Red"}], 
+       "}"}]}], ",", 
+     RowBox[{"AxesLabel", " ", "->", " ", 
+      RowBox[{"{", 
+       RowBox[{"\"\<x\>\"", ",", " ", "\"\<\[Psi]\>\""}], "}"}]}]}], " ", 
+    "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{
+  3.421373985419651*^9, {3.515293702483055*^9, 3.515293707908486*^9}, {
+   3.515293746894065*^9, 3.5152938049648314`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Show", "[", 
+  RowBox[{"fig", ",", "  ", 
+   RowBox[{"Graphics", " ", "[", " ", 
+    RowBox[{"{", " ", "\n", "\t\t\t", 
+     RowBox[{
+      RowBox[{"Text", "[", " ", 
+       RowBox[{"en", " ", ",", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "1"}], ",", " ", "0.8"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "1"}], ",", " ", "0"}], "}"}]}], " ", "]"}], " ", ",", 
+      "\n", 
+      RowBox[{"Text", "[", " ", 
+       RowBox[{"\"\<E = \>\"", ",", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "1"}], ",", " ", "0.8"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", " ", "0"}], "}"}]}], "  ", "]"}], ",", "\n", 
+      "\t\t\t", 
+      RowBox[{"Text", "[", "  ", 
+       RowBox[{"v0", ",", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "0.6"}], ",", " ", "1.2"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "1"}], ",", " ", "0"}], "}"}]}], " ", "]"}], " ", ",", 
+      "\n", 
+      RowBox[{"Text", "[", " ", 
+       RowBox[{"\"\<\!\(\*SubscriptBox[\(V\), \(0\)]\) = \>\"", ",", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "0.6"}], ",", " ", "1.2"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", " ", "0"}], "}"}]}], "  ", "]"}], ",", "\n", 
+      "\t\t\t", 
+      RowBox[{"Text", "[", " ", 
+       RowBox[{"\"\<L = \>\"", ",", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "0.57"}], ",", " ", "1"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", " ", "0"}], "}"}]}], "]"}], " ", ",", " \t", 
+      RowBox[{"Text", "[", " ", 
+       RowBox[{"L", ",", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "0.57"}], ",", " ", "1"}], "}"}], ",", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "1"}], ",", " ", "0"}], "}"}]}], "]"}]}], "}"}], " ", 
+    "]"}]}], " ", "]"}]], "Input",
+ CellChangeTimes->{
+  3.421373876732053*^9, {3.421373991529435*^9, 3.421373993025937*^9}, {
+   3.5152938136654053`*^9, 3.515293817824319*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{{{}, {}, 
+    {RGBColor[1, 0, 0], AbsoluteThickness[2], LineBox[CompressedData["
+1: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
+      "]]}}, {
+    InsetBox[
+     RowBox[{"-", "0.8142029405843095`"}], {-1, 0.8}, {-1, 0}], 
+    InsetBox["\<\"E = \"\>", {-1, 0.8}, {1, 0}], InsetBox[
+     RowBox[{"-", "8"}], {-0.6, 1.2}, {-1, 0}], 
+    InsetBox["\<\"\\!\\(\\*SubscriptBox[\\(V\\), \\(0\\)]\\) = \"\>", \
+{-0.6, 1.2}, {1, 0}], InsetBox["\<\"L = \"\>", {-0.57, 1}, {1, 0}], 
+    InsetBox["1", {-0.57, 1}, {-1, 0}]}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->True,
+  AxesLabel->{
+    FormBox["\"x\"", TraditionalForm], 
+    FormBox["\"\[Psi]\"", TraditionalForm]},
+  AxesOrigin->{0, 0},
+  AxesStyle->Thickness[Large],
+  BaseStyle->{15, FontFamily -> "Times", Bold},
+  FrameStyle->Thickness[Large],
+  ImageSize->{403.9999999999995, Automatic},
+  PlotRange->{{-2, 2}, {-0.8826261267566732, 0.8826280189176495}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{
+    Scaled[0.02], 
+    Scaled[0.02]}]], "Output",
+ CellChangeTimes->{
+  3.421373927178705*^9, 3.4213740005203667`*^9, 3.421506483302244*^9, 
+   3.482974560615793*^9, 3.515287572892826*^9, 3.5152935713985863`*^9, {
+   3.515293659876593*^9, 3.51529367581382*^9}, 3.5152937131064663`*^9, {
+   3.51529375659549*^9, 3.515293786499652*^9}, 3.515293822043953*^9}]
+}, Open  ]],
+
+Cell["\<\
+
+Again the wavefunction and its derivative are continuous at the walls of the \
+well, i.e. at x = \[PlusMinus] 1/2. The wavefunction has only one node, \
+showing that it is indeed the lowest energy odd-parity eigenstate.\
+\>", "Text",
+ CellChangeTimes->{{3.51529385915067*^9, 3.5152938844043083`*^9}, {
+  3.5152939186435633`*^9, 3.5152939578770657`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Conclusions", "Section"],
+
+Cell["\<\
+The method can now be used to determine eigenvalues and eigenvectors  for \
+other potential wells where analytical solutions don't exist provided V(x) = \
+0 for |x| > L/2.  Two examples which you could consider are:
+
+(a)  A single well\
+\>", "Text"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"V", 
+    RowBox[{"(", "x", ")"}]}], " ", "=", " ", 
+   RowBox[{"-", " ", 
+    RowBox[{
+     FractionBox[
+      SubscriptBox["V", "0"], "2"], " ", "[", 
+     RowBox[{"1", " ", "+", " ", 
+      RowBox[{"cos", " ", 
+       RowBox[{"(", 
+        RowBox[{"2", "\[Pi]", " ", 
+         RowBox[{"x", " ", "/", " ", "L"}]}], " ", ")"}]}]}], " ", "]"}]}]}], 
+  ",", "   ", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"-", "L"}], "/", "2"}], " ", "<", " ", "x", " ", "<", " ", 
+    RowBox[{"L", "/", "2"}]}], ")"}]}]], "DisplayFormula"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{
+    RowBox[{"and", " ", "V", 
+     RowBox[{"(", "x", ")"}]}], " ", "=", " ", "0"}], ",", " ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"otherwise", ".", " ", "This"}], " ", "has", " ", "depth"}], 
+     " ", "-", 
+     RowBox[{
+      SubscriptBox["V", "0"], "at", " ", "x"}]}], " ", "=", " ", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"0", " ", "and", " ", "vanishes", " ", "as"}], " ", "|", "x", 
+      "|"}], " ", "\[Rule]", " ", 
+     RowBox[{"L", "/", "2."}]}]}]}], TextForm]], "Text"],
+
+Cell["(b) A double well", "Text"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"V", 
+    RowBox[{"(", "x", ")"}]}], " ", "=", " ", 
+   RowBox[{"-", " ", 
+    RowBox[{
+     FractionBox[
+      SubscriptBox["V", "0"], "2"], " ", "[", 
+     RowBox[{"1", " ", "-", " ", 
+      RowBox[{"cos", " ", 
+       RowBox[{"(", 
+        RowBox[{"4", "\[Pi]", " ", 
+         RowBox[{"x", " ", "/", " ", "L"}]}], " ", ")"}]}]}], " ", "]"}]}]}], 
+  ",", "   ", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"-", "L"}], "/", "2"}], " ", "<", " ", "x", " ", "<", " ", 
+    RowBox[{"L", "/", "2"}]}], ")"}]}]], "DisplayFormula"],
+
+Cell[TextData[{
+ "which vanishes at x = 0 and \[PlusMinus] L/2, and has minima of depth ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"-", 
+     SubscriptBox["V", "0"]}], " "}], TraditionalForm]]],
+ "at x = \[PlusMinus] L/4. Increase the depth of the potential and notice how \
+the lowest even and odd energies become close to each other. Explain this in \
+terms of quantum mechanical tunneling. \n\nYou can also obtain higher energy \
+bound states of either parity by giving different starting values to the ",
+ StyleBox["FindRoot",
+  FontWeight->"Bold"],
+ " command. For a given value of the well depth it is of interest to \
+determine how many bound states there are. You will find that there is always \
+one bound state (this is a feature of one-dimension; it is not true in three \
+dimensions) and this is of even parity and has no nodes. However, the well \
+needs to be sufficiently deep for a second bound state to appear.\n\nThe \
+method used here relies on the potential vanishing for |x| > L/2. More \
+general potential wells can be studied using a similar but somewhat more \
+complicated method called the \"shooting method\", see e.g.  my handout on \
+this, and Kinzel, ",
+ StyleBox["Physics by Computer",
+  FontSlant->"Italic"],
+ ", p. 130-135."
+}], "Text",
+ CellChangeTimes->{{3.421508485749483*^9, 3.421508494124935*^9}}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{928, 1003},
+WindowMargins->{{Automatic, 466}, {Automatic, 6}},
+PrintingCopies->1,
+PrintingPageRange->{1, Automatic},
+PrintingOptions->{"Magnification"->1.,
+"PaperOrientation"->"Portrait",
+"PaperSize"->{611.25, 789.5625},
+"PostScriptOutputFile"->"/home/peter/courses/115/mathematica/quantumwell.nb.\
+ps"},
+Magnification->1.5,
+FrontEndVersion->"6.0 for Mac OS X x86 (32-bit) (May 21, 2008)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[590, 23, 109, 3, 149, "Title"],
+Cell[CellGroupData[{
+Cell[724, 30, 31, 0, 100, "Section"],
+Cell[758, 32, 424, 8, 84, "Text"],
+Cell[1185, 42, 380, 13, 59, "DisplayFormula"],
+Cell[1568, 57, 1317, 25, 291, "Text"],
+Cell[2888, 84, 73, 1, 40, "Input"],
+Cell[2964, 87, 77, 2, 40, "Input"],
+Cell[3044, 91, 97, 3, 40, "Input"],
+Cell[3144, 96, 216, 6, 42, "Input"],
+Cell[3363, 104, 214, 6, 42, "Input"],
+Cell[CellGroupData[{
+Cell[3602, 114, 1795, 46, 133, "Input"],
+Cell[5400, 162, 2767, 60, 369, "Output"]
+}, Open  ]],
+Cell[8182, 225, 293, 6, 107, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8512, 236, 41, 0, 100, "Section"],
+Cell[8556, 238, 599, 25, 47, "Text"],
+Cell[9158, 265, 77, 2, 40, "Input"],
+Cell[9238, 269, 323, 10, 42, "Input"],
+Cell[9564, 281, 349, 11, 42, "Input"],
+Cell[9916, 294, 243, 7, 84, "Text"],
+Cell[10162, 303, 335, 10, 42, "Input"],
+Cell[10500, 315, 607, 12, 129, "Text"],
+Cell[11110, 329, 1181, 35, 111, "Input"],
+Cell[12294, 366, 1221, 36, 177, "Text"],
+Cell[13518, 404, 349, 10, 42, "Input"],
+Cell[13870, 416, 917, 21, 174, "Text"],
+Cell[14790, 439, 349, 11, 42, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15176, 455, 39, 0, 100, "Section"],
+Cell[15218, 457, 283, 5, 84, "Text"],
+Cell[15504, 464, 77, 2, 40, "Input"],
+Cell[CellGroupData[{
+Cell[15606, 470, 377, 10, 40, "Input"],
+Cell[15986, 482, 373, 6, 40, "Output"]
+}, Open  ]],
+Cell[16374, 491, 350, 6, 107, "Text"],
+Cell[16727, 499, 155, 4, 30, "DisplayFormula"],
+Cell[16885, 505, 472, 18, 77, "Text"],
+Cell[CellGroupData[{
+Cell[17382, 527, 924, 27, 64, "Input"],
+Cell[18309, 556, 374, 6, 40, "Output"]
+}, Open  ]],
+Cell[18698, 565, 560, 16, 152, "Text"],
+Cell[19261, 583, 261, 8, 42, "Input"],
+Cell[19525, 593, 940, 24, 152, "Text"],
+Cell[20468, 619, 293, 7, 42, "Input"],
+Cell[20764, 628, 282, 8, 42, "Input"],
+Cell[21049, 638, 245, 7, 42, "Input"],
+Cell[21297, 647, 229, 6, 42, "Input"],
+Cell[21529, 655, 336, 8, 107, "Text"],
+Cell[21868, 665, 398, 11, 40, "Input"],
+Cell[22269, 678, 195, 6, 42, "Input"],
+Cell[22467, 686, 524, 9, 107, "Text"],
+Cell[22994, 697, 847, 23, 64, "Input"],
+Cell[CellGroupData[{
+Cell[23866, 724, 1910, 50, 179, "Input"],
+Cell[25779, 776, 6452, 114, 392, "Output"]
+}, Open  ]],
+Cell[32246, 893, 330, 6, 62, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[32613, 904, 38, 0, 100, "Section"],
+Cell[32654, 906, 64, 0, 39, "Text"],
+Cell[32721, 908, 116, 4, 40, "Input"],
+Cell[32840, 914, 150, 3, 62, "Text"],
+Cell[CellGroupData[{
+Cell[33015, 921, 362, 10, 40, "Input"],
+Cell[33380, 933, 371, 6, 40, "Output"]
+}, Open  ]],
+Cell[33766, 942, 216, 4, 62, "Text"],
+Cell[CellGroupData[{
+Cell[34007, 950, 492, 14, 64, "Input"],
+Cell[34502, 966, 374, 6, 40, "Output"]
+}, Open  ]],
+Cell[34891, 975, 228, 6, 107, "Text"],
+Cell[35122, 983, 261, 8, 42, "Input"],
+Cell[35386, 993, 173, 3, 62, "Text"],
+Cell[35562, 998, 314, 8, 42, "Input"],
+Cell[35879, 1008, 70, 0, 39, "Text"],
+Cell[35952, 1010, 387, 11, 40, "Input"],
+Cell[36342, 1023, 187, 4, 62, "Text"],
+Cell[36532, 1029, 789, 22, 64, "Input"],
+Cell[CellGroupData[{
+Cell[37346, 1055, 2142, 58, 179, "Input"],
+Cell[39491, 1115, 7783, 136, 413, "Output"]
+}, Open  ]],
+Cell[47289, 1254, 364, 7, 84, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[47690, 1266, 30, 0, 100, "Section"],
+Cell[47723, 1268, 259, 6, 129, "Text"],
+Cell[47985, 1276, 583, 19, 51, "DisplayFormula"],
+Cell[48571, 1297, 548, 17, 41, "Text"],
+Cell[49122, 1316, 33, 0, 39, "Text"],
+Cell[49158, 1318, 583, 19, 51, "DisplayFormula"],
+Cell[49744, 1339, 1343, 26, 311, "Text"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

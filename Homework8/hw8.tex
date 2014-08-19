@@ -1,0 +1,79 @@
+%% AMS-LaTeX Created by Wolfram Mathematica 9.0 : www.wolfram.com
+
+\documentclass{article}
+\usepackage{amsmath, amssymb, graphics, setspace}
+
+\newcommand{\mathsym}[1]{{}}
+\newcommand{\unicode}[1]{{}}
+
+\newcounter{mathematicapage}
+\begin{document}
+
+\title{Homework 8}
+\author{Part C}
+\date{a) Potential}
+\maketitle
+
+\begin{doublespace}
+\noindent\(-\text{DeFilippis} \text{Jacob}\)
+\end{doublespace}
+
+\section*{Question 1}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{Clear}[\text{{``}Global$\grave{ }$*{''}}]}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{mandelbrot}[\text{cx$\_$},\text{cy$\_$},\text{lim$\_$}]\text{:=}}\\
+\pmb{\text{Module}[\{z=0,\text{ct}=0\},\text{While}[\text{Abs}[z]<2.0\&\&\text{ct}\leq \lim ,z=z{}^{\wedge}2+\text{cx}+I \text{cy};}\\
+\pmb{\text{++}\text{ct}];}\\
+\pmb{-\text{ct}];}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{mandelbrotC}=\text{Compile}[\{\text{cx},\text{cy},\lim \},}\\
+\pmb{\text{Module}[\{z=0.+I 0.,\text{ct}=0\},}\\
+\pmb{\text{While}[\text{Abs}[z]<2.0\&\&\text{ct}\leq \lim ,z=z{}^{\wedge}2+\text{cx}+I \text{cy};}\\
+\pmb{\text{++}\text{ct}];}\\
+\pmb{-\text{ct}]];}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{DensityPlot}[\text{mandelbrot}[x,y,100],\{x,-2,0.6\},\{y,-1.3,1.3\},}\\
+\pmb{\text{PlotPoints}\to 200,\text{Mesh}\to \text{False},\text{ColorFunction}\to (\text{Hue}[0.65 \text{$\#$1}{}^{\wedge}0.6]\&),}\\
+\pmb{\text{FrameLabel}\to \{\text{{``}cx{''}},\text{{``}cy{''}}\}]}\)
+\end{doublespace}
+
+\includegraphics{hw8_gr1.eps}
+
+\section*{Question 2}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{Clear}[\text{{``}Global$\grave{ }$*{''}}]}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{r=26.5; \sigma  = 10; b = 8/3;}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{}}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{sol} = }\\
+\pmb{\text{NDSolve}[\{x'[t]==\sigma  (-x[t]+y[t]),y'[t]==-x[t] z[t]+r x[t]-y[t],}\\
+\pmb{z'[t]==x[t] y[t]- b z[t],x[0]==z[0]==0,y[0]==1\},\{x,y,z\},}\\
+\pmb{\{t,0,200\},\text{MaxSteps}\to \text{Infinity}]}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\{\{x\to \text{InterpolatingFunction}[\{\{0.,200.\}\},<>],y\to \text{InterpolatingFunction}[\{\{0.,200.\}\},<>],z\to \text{InterpolatingFunction}[\{\{0.,200.\}\},<>]\}\}\)
+\end{doublespace}
+
+\begin{doublespace}
+\noindent\(\pmb{\text{ParametricPlot3D}[\text{Evaluate}[\{x[t],y[t],z[t]\}\text{/.}\%],\{t,0,200\},}\\
+\pmb{\text{PlotPoints}\to 100000,\text{ColorFunction}\to (\text{ColorData}[\text{{``}Rainbow{''}}][\text{$\#$4}]\&)]}\)
+\end{doublespace}
+
