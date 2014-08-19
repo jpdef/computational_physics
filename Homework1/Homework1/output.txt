@@ -1,0 +1,169 @@
+Running float overflow test
+2^1 = 2.00000e+00
+2^2 = 4.00000e+00
+......
+2^125 = 4.25353e+37
+2^126 = 8.50706e+37
+2^127 = 1.70141e+38
+2^128 = inf
+Float Overflow happens at value 2^128
+
+ 
+Running double overflow test
+2^1 = 2.00000e+00
+2^2 = 4.00000e+00
+......
+2^1021 = 2.24712e+307
+2^1022 = 4.49423e+307
+2^1023 = 8.98847e+307
+2^1024 = inf
+Double Overflow happens at value 2^1024
+
+
+================2C================
+Running float underflow test
+2^1 = 5.00000e-01
+2^2 = 2.50000e-01
+......
+2^147 = 5.60519e-45
+2^148 = 2.80260e-45
+2^149 = 1.40130e-45
+2^150 = 0.00000e+00
+Float underflow happens at value 2^150
+
+ 
+Running double underflow test
+2^1 = 5.00000e-01
+2^2 = 2.50000e-01
+......
+2^1073 = 9.88131e-324
+2^1074 = 4.94066e-324
+2^1075 = 0.00000e+00
+Double underflow happens at value 2^1075
+
+===================2D==============
+Testing float precision:
+1: Epsilon = 1.0000002384e-01
+2: Epsilon = 9.9999904633e-03
+3: Epsilon = 9.9998712540e-04
+4: Epsilon = 1.0001659393e-04
+5: Epsilon = 1.0013580322e-05
+6: Epsilon = 1.0132789612e-06
+7: Epsilon = 1.1920928955e-07
+8: Epsilon = 0.0000000000e+00
+Most precision with float is 7 digits
+Testing double precision:
+1: Epsilon = 1.0000000000e-01
+2: Epsilon = 1.0000000000e-02
+3: Epsilon = 1.0000000000e-03
+4: Epsilon = 1.0000000000e-04
+5: Epsilon = 1.0000000000e-05
+6: Epsilon = 1.0000000000e-06
+7: Epsilon = 9.9999999947e-08
+8: Epsilon = 1.0000000050e-08
+9: Epsilon = 9.9999997172e-10
+10: Epsilon = 1.0000000827e-10
+11: Epsilon = 1.0000000827e-11
+12: Epsilon = 9.9997787828e-13
+13: Epsilon = 1.0003109452e-13
+14: Epsilon = 9.9920072216e-15
+15: Epsilon = 9.9920072216e-16
+16: Epsilon = 1.1102230246e-16
+17: Epsilon = 0.0000000000e+00
+Most precision with double is 16 digits 
+
+PHi^2 = 0.381966 
+PHi^3 = 0.236068 
+PHi^4 = 0.145898 
+PHi^5 = 0.090170 
+PHi^6 = 0.055728 
+PHi^7 = 0.034442 
+PHi^8 = 0.021286 
+PHi^9 = 0.013156 
+PHi^10 = 0.008131 
+================3a==========
+Single precision sum up and down
+For 10^2, the sum up = 2.71785736e+00 and sum down is 2.71785712e+00
+For 10^3, the sum up = 2.82896852e+00 and sum down is 2.82896829e+00
+For 10^4, the sum up = 3.25156236e+00 and sum down is 3.25156236e+00
+For 10^5, the sum up = 3.31822896e+00 and sum down is 3.31822920e+00
+For 10^6, the sum up = 3.10321069e+00 and sum down is 3.10321093e+00
+For 10^7, the sum up = 3.18013382e+00 and sum down is 3.18013382e+00
+=============3b=======
+Double precision sums:
+For 10^2 sum up is 5.18737752e+00, sum down is 5.18737752e+00 
+For 10^3 sum up is 7.48547086e+00, sum down is 7.48547086e+00 
+For 10^4 sum up is 9.78760604e+00, sum down is 9.78760604e+00 
+For 10^5 sum up is 1.20901461e+01, sum down is 1.20901461e+01 
+For 10^6 sum up is 1.43927267e+01, sum down is 1.43927267e+01 
+For 10^7 sum up is 1.66953114e+01, sum down is 1.66953114e+01 
+=================3c===============
+For 10^2
+Difference between sum up and sum down with double precision= -8.88178e-16
+For 10^3
+Difference between sum up and sum down with double precision= 2.66454e-15
+For 10^4
+Difference between sum up and sum down with double precision= -3.73035e-14
+For 10^5
+Difference between sum up and sum down with double precision= -7.28306e-14
+For 10^6
+Difference between sum up and sum down with double precision= -7.83373e-13
+For 10^7
+Difference between sum up and sum down with double precision= -2.69296e-12
+==============3d==============
+Difference between float and double in sums
+N=10^2 : Difference in up sum = -4.12048e-07, Difference in down sum = 5.41626e-07 
+N=10^3 : Difference in up sum = -7.54063e-06, Difference in down sum = -8.64914e-07 
+N=10^4 : Difference in up sum = -6.87899e-06, Difference in down sum = 1.70407e-06 
+N=10^5 : Difference in up sum = -7.04700e-04, Difference in down sum = -6.61062e-06 
+N=10^6 : Difference in up sum = 3.53687e-02, Difference in down sum = 7.51649e-05 
+N=10^7 : Difference in up sum = 1.29163e+00, Difference in down sum = 9.28002e-03 
+Down is more accurate
+==============4a============
+Single precision of the golden mean
+Phi^1 = 6.18034005e-01
+Phi^2 = 3.81966025e-01
+Phi^3 = 2.36067995e-01
+Phi^4 = 1.45898044e-01
+Phi^5 = 9.01699513e-02
+Phi^6 = 5.57280965e-02
+Phi^7 = 3.44418585e-02
+Phi^8 = 2.12862398e-02
+Phi^9 = 1.31556196e-02
+Phi^10 = 8.13062023e-03
+
+Double precision of the golden mean
+Phi^1 = 6.18033989e-01
+Phi^2 = 3.81966011e-01
+Phi^3 = 2.36067977e-01
+Phi^4 = 1.45898034e-01
+Phi^5 = 9.01699437e-02
+Phi^6 = 5.57280900e-02
+Phi^7 = 3.44418537e-02
+Phi^8 = 2.12862363e-02
+Phi^9 = 1.31556175e-02
+Phi^10 = 8.13061876e-03
+==============4c==========
+Single precision on golden mean:
+Phi^2 = 3.81965995e-01 
+Phi^3 = 2.36068010e-01 
+Phi^4 = 1.45897985e-01 
+Phi^5 = 9.01700258e-02 
+Phi^6 = 5.57279587e-02 
+Phi^7 = 3.44420671e-02 
+Phi^8 = 2.12858915e-02 
+Phi^9 = 1.31561756e-02 
+Phi^10 = 8.12971592e-03 
+
+Double precision on golden mean:
+Phi^2 = 3.81966011e-01 
+Phi^3 = 2.36067977e-01 
+Phi^4 = 1.45898034e-01 
+Phi^5 = 9.01699437e-02 
+Phi^6 = 5.57280900e-02 
+Phi^7 = 3.44418537e-02 
+Phi^8 = 2.12862363e-02 
+Phi^9 = 1.31556175e-02 
+Phi^10 = 8.13061876e-03 
+=========5======
+The second derivative of x^3 evaluated at 5.00000e+00 is 3.00000e+01

@@ -1,0 +1,98 @@
+Running float overflow test
+2^1 = 2.00000e+00
+2^2 = 4.00000e+00
+......
+2^125 = 4.25353e+37
+2^126 = 8.50706e+37
+2^127 = 1.70141e+38
+2^128 = inf
+Float Overflow happens at value 2^128
+
+ 
+Running double overflow test
+2^1 = 2.00000e+00
+2^2 = 4.00000e+00
+......
+2^1021 = 2.24712e+307
+2^1022 = 4.49423e+307
+2^1023 = 8.98847e+307
+2^1024 = inf
+Double Overflow happens at value 2^1024
+
+
+================2C================
+Running float underflow test
+2^1 = 5.00000e-01
+2^2 = 2.50000e-01
+......
+2^147 = 5.60519e-45
+2^148 = 2.80260e-45
+2^149 = 1.40130e-45
+2^150 = 0.00000e+00
+Float underflow happens at value 2^150
+
+ 
+Running double underflow test
+2^1 = 5.00000e-01
+2^2 = 2.50000e-01
+......
+2^1073 = 9.88131e-324
+2^1074 = 4.94066e-324
+2^1075 = 0.00000e+00
+Double underflow happens at value 2^1075
+
+===================2D==============
+Testing float precision:
+1: Epsilon = 1.0000002384e-01
+2: Epsilon = 9.9999904633e-03
+3: Epsilon = 9.9998712540e-04
+4: Epsilon = 1.0001659393e-04
+5: Epsilon = 1.0013580322e-05
+6: Epsilon = 1.0132789612e-06
+7: Epsilon = 1.1920928955e-07
+8: Epsilon = 0.0000000000e+00
+Most precision with float is 7 digits
+Testing double precision:
+1: Epsilon = 1.0000000000e-01
+2: Epsilon = 1.0000000000e-02
+3: Epsilon = 1.0000000000e-03
+4: Epsilon = 1.0000000000e-04
+5: Epsilon = 1.0000000000e-05
+6: Epsilon = 1.0000000000e-06
+7: Epsilon = 9.9999999947e-08
+8: Epsilon = 1.0000000050e-08
+9: Epsilon = 9.9999997172e-10
+10: Epsilon = 1.0000000827e-10
+11: Epsilon = 1.0000000827e-11
+12: Epsilon = 9.9997787828e-13
+13: Epsilon = 1.0003109452e-13
+14: Epsilon = 9.9920072216e-15
+15: Epsilon = 9.9920072216e-16
+16: Epsilon = 1.1102230246e-16
+17: Epsilon = 0.0000000000e+00
+Most precision with double is 16 digits 
+
+PHi^2 = 0.381966 
+PHi^3 = 0.236068 
+PHi^4 = 0.145898 
+PHi^5 = 0.090170 
+PHi^6 = 0.055728 
+PHi^7 = 0.034442 
+PHi^8 = 0.021286 
+PHi^9 = 0.013156 
+PHi^10 = 0.008131 
+j_3(0.1) = 9.5185e-06
+j_5(0.1) = 9.6163e-10
+j_8(0.1) = 2.9012e-16
+j_12(0.1) = 1.2647e-25
+
+j_3(1.0) = 9.0066e-03
+j_5(1.0) = 9.2561e-05
+j_8(1.0) = 2.8265e-08
+j_12(1.0) = 1.2417e-13
+
+j_3(10.0) = -3.9496e-02
+j_5(10.0) = -5.5535e-02
+j_8(10.0) = 1.2558e-01
+j_12(10.0) = 1.7216e-02
+
