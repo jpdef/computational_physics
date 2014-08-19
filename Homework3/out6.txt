@@ -1,0 +1,2 @@
+Time 	 x 	 p
+ Period = 7.45414214

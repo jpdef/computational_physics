@@ -1,0 +1,4 @@
+Bisection
+Root 1 1.4142 
+Newton-Raphlson Polishing
+Root 1 1.41421356237310 
