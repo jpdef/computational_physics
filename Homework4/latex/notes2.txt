@@ -1,0 +1,1 @@
+For the given anhamornic oscilitor, this program integrates over the ode with both a fourth order sympletic algorighm and fourth order runge-kutta. At each iteration the program outputs the deviation of the energy produce from each algorighm from the orginal energy. At the same time keeps track of  the maximum deviation.

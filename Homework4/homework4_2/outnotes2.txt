@@ -1,0 +1,1 @@
+It goes to show that at low periods the runge kutta algorighm maybe more precision since its energy deviates, but at higher time periods RK4 deviation growths while PERFL seems to ocsiliate around the intial energy.

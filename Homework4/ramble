@@ -1,0 +1,17 @@
+
+\documentclass[10pt]{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{rotating}
+\usepackage{lscape}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{subfigure}
+\usepackage{circuitikz}
+\usepackage{caption}
+
+
+\begin{document}
+
+

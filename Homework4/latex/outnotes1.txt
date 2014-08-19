@@ -1,0 +1,1 @@
+From this output we determine $a = 0.6745201$ and that is accurate to five digits of precision due to the fact that both the values in a and I after the last iteration changed by an order less than five digits.

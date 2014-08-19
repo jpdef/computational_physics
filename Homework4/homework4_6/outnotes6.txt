@@ -1,0 +1,1 @@
+We take to be the number of degree of freedom to be the number of x variables minus the two constraints from $a_0$, $a_1$. We find the quality factor to be .32 which proves it to be a good fit.

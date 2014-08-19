@@ -1,0 +1,1 @@
+The program uses simpsons integration and bisection root finding to evaluate the limits of the integral. By creating an equation where the intgral minus a half is equal to zero we use the bisection rule to find which limits bring that integral value close to a half. We keep doing this until we have attained the five digits in precision of a and I.

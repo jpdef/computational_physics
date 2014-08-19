@@ -1,0 +1,5 @@
+a_0 = 0.904589 +/- 0.283907 , a_1=5.002239 +/- 0.002450
+Chi Square = 205.917073
+There are N=200 total variables and two constraints a_0 and a_1
+therefore there are N-2=198 degrees of freedom so chi_squared/dof =1.039985
+Quality = 0.325519 

@@ -1,0 +1,1 @@
+When running heap sort on $10^6$ elements versus $10^7$ there is only a multiplitive factor of $11.7$ between the number of operation needed to be done. This is measured by the amount of times we must check the parent to the children.

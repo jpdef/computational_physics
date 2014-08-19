@@ -1,0 +1,1 @@
+We can see that as we make the step size smaller the value of  $\psi(1)$ is approaching zero. Which shows that smaller step sizes make the Rk4 algorighm more accurate. This is due to the fact that the algorighm advances by evaulating derivates at that step size. 
